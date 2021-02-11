@@ -14,25 +14,4 @@ Total: 923.96
 Transfer from Food       50.00
                         -25.55                        
 Total: 24.45 
-Percentage spent by category
-100|          
- 90|          
- 80|          
- 70|          
- 60| o        
- 50| o        
- 40| o        
- 30| o        
- 20| o  o     
- 10| o  o  o  
-  0| o  o  o  
-    ----------
-     F  C  A  
-     o  l  u  
-     o  o  t  
-     d  t  o  
-        h     
-        i     
-        n     
-        g     
-        
+['Percentage spent by category\n', '100|          \n', ' 90|          \n', ' 80|          \n', ' 70|    o     \n', ' 60|    o     \n', ' 50|    o     \n', ' 40|    o     \n', ' 30|    o     \n', ' 20|    o  o  \n', ' 10|    o  o  \n', '  0| o  o  o  \n', '    ----------\n', '     B  F  E  \n     u  o  n  \n     s  o  t  \n     i  d  e  \n     n     r  \n     e     t  \n     s     a  \n     s     i  \n           n  \n           m  \n           e  \n           n  \n           t  ']
