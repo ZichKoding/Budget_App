@@ -5,25 +5,15 @@ This is the third out of five projects for becoming certified in Scientific Comp
 
 973.96
 *************Food*************
-
 initial deposit        1000.00
-
 groceries               -10.15
-
 restaurant and more foo -15.89
-
 Transfer to Clothing    -50.00
-
 Total: 923.96
-
 ***********Clothing***********
-
 Transfer from Food       50.00
-
-                        -25.55
-                        
+                        -25.55                        
 Total: 24.45 
-
 Percentage spent by category
 100|          
  90|          
