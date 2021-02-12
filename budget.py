@@ -1,7 +1,5 @@
 class Category:
 
-##### Passes all tests. Still have to fix the comments and clean the code up. #####
-
   def __init__(self, category=None):
     self.ledger = []
     self.category = category.lower().capitalize()
@@ -25,7 +23,8 @@ class Category:
     else:
       return  self.ledger.append({"amount": self.deposit_amount, "description": ''})
 
-  # Tells you how much you witdrew and description is optional and stores under __init__ in the self.ledger. Also, this is where it calculates the balance and stores it under __init__ in self.check_funds.
+  # Tells you how much you witdrew and description is optional and stores under __init__ in the self.ledger.
+  # Also, this is where it calculates the balance and stores it under __init__ in self.check_funds.
   def withdraw(self, withdraw_amount, withdraw_descrip=None):
     self.withdraw_amount = -(withdraw_amount)
     self.withdraw_descrip = withdraw_descrip
@@ -39,7 +38,8 @@ class Category:
       self.ledger.append({"amount": self.withdraw_amount, "description": ''})
     return True
 
-  # To transfer from one objet (Category) to another and tell you where it went to and came from accordingly. It is stored inside of the ledger as if it were a withdraw if leaving and deposit if coming to. 
+  # To transfer from one objet (Category) to another and tell you where it went to and came from accordingly.
+  # It is stored inside of the ledger as if it were a withdraw if leaving and deposit if coming to. 
   def transfer(self, amount, category):
     if self.check_funds(amount) is False:
       return False
@@ -50,7 +50,7 @@ class Category:
     self.ledger.append({"amount": -(amount), "description": ("Transfer to " + self.to_category)})
     return True
 
-
+  # This will show you at anytime what's the remaining balance is.
   def get_balance(self):
     return self.funds
 
@@ -59,15 +59,13 @@ class Category:
     self.ledger.append({'balance': self.funds})
     ledger = []
 
-    #Formats the title category with 30 characters long including the category in the center and the empty spaces are filled with *'s.
+    #Formats the title category with 30 characters long including the category in the center and the other characters are *'s.
     c = self.category
     stars = (int((30 - len(c))/2) * ("*")) + c + (int((30 - len(c))/2) * "*")
-    #print(stars)
     ledger.append((stars + '\n'))
 
-    # Breaks the list down to the dictionaries inside the list.
+    # Breaks down the dictionaires and creates the correct formatting with description aligned to the left and amount aligned to the right.
     for l in self.ledger:
-      # Breaks down the dictionaires and creates the correct formatting with description aligned to the left and amount aligned to the right.
       for k, v in l.items():
         if k == "description":
           amount = l["amount"]
@@ -78,19 +76,15 @@ class Category:
             v = str(v)
           if len(v) >= int(30 - len(amount)):
             v = v[0 : int(30- len(amount) -1)] + ' '
-          #print(str(v + spacing + amount))
           ledger.append((str(v + spacing + amount) + '\n'))
         if k == "balance":
           amount = (len('balance') + len(str(v)))
           spacing = (int( 30 - amount) * ' ')
-          #print("balance" + spacing + str(v))
           ledger.append(("Total: " + str(v)))
-
     return ''.join(ledger).replace("'", '')
 
 
-
-
+# The purpose of this function is to take the above categories and show percentage spent in a bar graph. 
 def create_spend_chart(categories):
   spacing = len(categories) * len(categories) + 1
 
@@ -103,7 +97,6 @@ def create_spend_chart(categories):
   else:
     category = categories.withdrawn
     withdrawals.append(category)
-
   # Here we are collecting the total of the amount that was witdrawn.
   totals = 0
   for withdraw in withdrawals:
@@ -117,15 +110,15 @@ def create_spend_chart(categories):
     amount_category = categor.withdrawn
     for amount_categ in amount_category:
       amount = round(amount_categ + amount, 2)
-      amount = int((amount / totals) * 100) # This gives me percentages to 10th value.
+      amount = int((amount / totals) * 100) 
       if amount >= 10:
-        amount = round(amount, -1)
+        amount = round(amount, -1)  # This gives me percentages to 10th value.
       else:
-        amount = round(amount, 0)
+        amount = round(amount, 0) # This gives me 0% if amount spent is less than 10.
     catty = {categor.category: amount}
     charts.append(catty)
 
-  # This section makes breaks everything down and combines them all together to format the bar graph.
+  # This section breaks everything down and combines them all together to format the bar graph.
   chart_2 = ["Percentage spent by category" '\n',]
   for percent in range(0, 110, 10):   # This is going to go from 0 - 100 percent in intervals of 10 and check the categories if they are equal to the percentage.
     bars = []
@@ -142,10 +135,9 @@ def create_spend_chart(categories):
         percent = '  ' + str(percent)
       else:
         percent = ' ' + str(percent)
-
     bar_chart = str(percent)+ '|' + (''.join(bars)) + '\n'
     chart_2.insert(1, bar_chart)
-  chart_2.append((4 * ' ' + (spacing * '-') + '\n'))
+  chart_2.append((4 * ' ' + (spacing * '-') + '\n')) # This creates the lines for the x-axis.
 
   # Determining the longest category and putting the category into a list to make it easier to play with.
   cat_names = []
@@ -156,23 +148,25 @@ def create_spend_chart(categories):
     if longest < len(names):
       longest = len(names)
 
-  # Formatting each Category vertically and correctly uner the corresponding bars.
+  # Formatting each Category vertically and correctly to the bars.
   vc = []
   l = longest
   for i in range(0, longest):
     l -= 1
-    vc.append(4 * ' ')
+    vc.append(4 * ' ')  # These spaces are to be the amount of characters that the y-axis percentage numbers are so everything will align properly and not be crammed to the left. 
+
+    # This part of the for loop is going through the index of each Category in the list and appending them as necessary.
     for nam in cat_names:
-      try:
+      try: # The try method is to keep it running through the list instead of throwing an IndexError.
         if i <= len(nam):
             vc.append(' ' + nam[i] + ' ')
-      except:
+      except: # If the try method throws an IndexError the except appends 3 spaces for that category that wasn't long enough.
         space = 3 * ' '
         vc.append(space)
       if i > len(nam):
         space = 3 * ' '
         vc.append(space)
-    if l > 0:
+    if l > 0: # To append a new line after each time it goes through one index of each category to arrange vertically.
       vc.append(' \n')
     else: 
       vc.append(' ')
